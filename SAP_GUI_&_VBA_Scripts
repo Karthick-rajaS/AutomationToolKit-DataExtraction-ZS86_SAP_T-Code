@@ -1,0 +1,106 @@
+Sub CollectingDataFromZS86()
+
+If objGui Is Nothing Then
+   Set SapGuiAuto = GetObject("SAPGUI")
+   Set objGui = SapGuiAuto.GetScriptingEngine
+End If
+If objConn Is Nothing Then
+   Set objConn = objGui.Children(0)
+End If
+If session Is Nothing Then
+   Set session = objConn.Children(0)
+End If
+If IsObject(WScript) Then
+   WScript.ConnectObject session, "on"
+   WScript.ConnectObject objGui, "on"
+End If
+
+SalesOrderNumber = Worksheets("DataSheet").Range("A2").Value
+
+session.FindById("wnd[0]").Maximize
+session.FindById("wnd[0]/tbar[0]/okcd").Text = "/nzs86"
+session.FindById("wnd[0]").SendVKey 0
+session.FindById("wnd[0]/usr/ctxtS_VBELN-LOW").Text = SalesOrderNumber
+session.FindById("wnd[0]/usr/ctxtS_VBELN-LOW").SetFocus
+session.FindById("wnd[0]/usr/ctxtS_VBELN-LOW").CaretPosition = 7
+session.FindById("wnd[0]/tbar[1]/btn[8]").Press
+
+session.FindById("wnd[0]/usr/cntlGRID1/shellcont/shell").SetCurrentCell -1, "MATNR"
+session.FindById("wnd[0]/usr/cntlGRID1/shellcont/shell").FirstVisibleColumn = "KDMAT"
+session.FindById("wnd[0]/usr/cntlGRID1/shellcont/shell").SelectColumn "MATNR"
+session.FindById("wnd[0]/usr/cntlGRID1/shellcont/shell").ContextMenu
+session.FindById("wnd[0]/usr/cntlGRID1/shellcont/shell").SelectContextMenuItem "&FILTER"
+session.FindById("wnd[1]/usr/ssub%_SUBSCREEN_FREESEL:SAPLSSEL:1105/ctxt%%DYN001-LOW").Text = "vstl*"
+session.FindById("wnd[1]/usr/ssub%_SUBSCREEN_FREESEL:SAPLSSEL:1105/ctxt%%DYN001-LOW").CaretPosition = 5
+session.FindById("wnd[1]/tbar[0]/btn[0]").Press
+
+Set myGrid = session.FindById("wnd[0]/usr/cntlGRID1/shellcont/shell")
+allRows = myGrid.RowCount - 1 'number of SAP rows
+allCols = myGrid.ColumnCount - 1 'number of SAP Columns
+Dim columns As Object
+Set columns = myGrid.ColumnOrder 'SAP column names in order in SAP window
+
+
+ For j = 0 To allRows
+  myGrid.FirstVisibleRow = j
+  For i = 0 To allCols
+   ActiveSheet.Cells(j + 5, i + 1).Value = myGrid.GetCellValue(j, columns(i)) 'starts in cell "A1"
+  Next i
+ Next j
+ 
+session.FindById("wnd[0]/tbar[0]/btn[15]").Press
+session.FindById("wnd[0]/tbar[0]/btn[15]").Press
+
+'end...
+
+Plant = Worksheets("DataSheet").Range("D5").Value
+
+session.FindById("wnd[0]").Maximize
+session.FindById("wnd[0]/tbar[0]/okcd").Text = "/nzp85n"
+session.FindById("wnd[0]").SendVKey 0
+session.FindById("wnd[0]/usr/radP_ORD").SetFocus
+session.FindById("wnd[0]/usr/radP_ORD").Select
+session.FindById("wnd[0]/usr/radP_DET").SetFocus
+session.FindById("wnd[0]/usr/radP_DET").Select
+session.FindById("wnd[0]/usr/chkP_MULEXP").Selected = True
+session.FindById("wnd[0]/usr/txtP_VBELN").Text = SalesOrderNumber
+session.FindById("wnd[0]/usr/txtP_VBELN").SetFocus
+session.FindById("wnd[0]/usr/txtP_VBELN").CaretPosition = 7
+session.FindById("wnd[0]/tbar[1]/btn[8]").Press
+session.FindById("wnd[0]/tbar[1]/btn[33]").Press
+session.FindById("wnd[1]/usr/ssubD0500_SUBSCREEN:SAPLSLVC_DIALOG:0501/cntlG51_CONTAINER/shellcont/shell").CurrentCellRow = -1
+session.FindById("wnd[1]/usr/ssubD0500_SUBSCREEN:SAPLSLVC_DIALOG:0501/cntlG51_CONTAINER/shellcont/shell").SelectColumn "VARIANT"
+session.FindById("wnd[1]/usr/ssubD0500_SUBSCREEN:SAPLSLVC_DIALOG:0501/cntlG51_CONTAINER/shellcont/shell").ContextMenu
+session.FindById("wnd[1]/usr/ssubD0500_SUBSCREEN:SAPLSLVC_DIALOG:0501/cntlG51_CONTAINER/shellcont/shell").SelectContextMenuItem "&FILTER"
+session.FindById("wnd[2]/usr/ssub%_SUBSCREEN_FREESEL:SAPLSSEL:1105/ctxt%%DYN001-LOW").Text = "/N"
+session.FindById("wnd[2]/usr/ssub%_SUBSCREEN_FREESEL:SAPLSSEL:1105/ctxt%%DYN001-LOW").CaretPosition = 2
+session.FindById("wnd[2]").SendVKey 0
+session.FindById("wnd[1]/usr/ssubD0500_SUBSCREEN:SAPLSLVC_DIALOG:0501/cntlG51_CONTAINER/shellcont/shell").SelectedRows = "0"
+session.FindById("wnd[1]/usr/ssubD0500_SUBSCREEN:SAPLSLVC_DIALOG:0501/cntlG51_CONTAINER/shellcont/shell").ClickCurrentCell
+session.FindById("wnd[0]/usr/cntlGRID1/shellcont/shell/shellcont[1]/shell").CurrentCellRow = -1
+session.FindById("wnd[0]/usr/cntlGRID1/shellcont/shell/shellcont[1]/shell").SelectColumn "IDNRK"
+session.FindById("wnd[0]/usr/cntlGRID1/shellcont/shell/shellcont[1]/shell").ContextMenu
+session.FindById("wnd[0]/usr/cntlGRID1/shellcont/shell/shellcont[1]/shell").SelectContextMenuItem "&FILTER"
+session.FindById("wnd[1]/usr/ssub%_SUBSCREEN_FREESEL:SAPLSSEL:1105/ctxt%%DYN001-LOW").Text = "*vstl*"
+session.FindById("wnd[1]/usr/ssub%_SUBSCREEN_FREESEL:SAPLSSEL:1105/ctxt%%DYN001-LOW").CaretPosition = 6
+session.FindById("wnd[1]").SendVKey 0
+
+
+Set myGrid = session.FindById("wnd[0]/usr/cntlGRID1/shellcont/shell/shellcont[1]/shell")
+allRows = myGrid.RowCount - 1 'number of SAP rows
+allCols = myGrid.ColumnCount - 9 'number of SAP Columns
+Dim columns1 As Object
+Set columns1 = myGrid.ColumnOrder 'SAP column names in order in SAP window
+
+
+ For j = 0 To allRows
+ myGrid.FirstVisibleRow = 0
+  For i = 5 To allCols
+   ActiveSheet.Cells(j + 5, i + 108).Value = myGrid.GetCellValue(j, columns1(i)) 'starts in cell "A1"
+  Next i
+ Next j
+ 
+session.FindById("wnd[0]/tbar[0]/btn[3]").Press
+session.FindById("wnd[0]/tbar[0]/btn[3]").Press
+
+End Sub
