@@ -56,18 +56,8 @@ Sub RunSAPScript()
 End Sub
 ```
 
-# 4. Publishing to GitHub
-To publish your scripts on GitHub:
-- Create a GitHub repository for your project.
-- Organize your scripts into appropriate folders (`SAP_GUI_Scripts` and `VBA_Scripts`, for example).
-- Write a `README.md` file explaining the purpose, setup instructions, and usage of your scripts.
-- Ensure any sensitive information (like SAP credentials) is not hardcoded into the scripts.
-
-# 5. Documentation and Instructions
-Include detailed instructions in your `README.md` file on how to:
-- Enable SAP GUI Scripting.
-- Install and use the VBA script from Excel.
-- Customize the scripts for different environments or scenarios.
+# README.md
+Document explaining the purpose and basic instructions for using the scripts.
 
 ### Additional Tips
 - Test your scripts thoroughly in a development or sandbox SAP environment before using them in production.
