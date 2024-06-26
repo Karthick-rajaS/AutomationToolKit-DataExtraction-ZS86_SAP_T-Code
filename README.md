@@ -58,9 +58,9 @@ End Sub
 
 # Repository Name: SAP_GUI_&_VBA_Scripts
 
-Description: This repository contains SAP GUI and VBA scripts designed for automating the extraction of sales order data from SAP ERP using transaction code ZS86.
+This repository contains SAP GUI and VBA scripts designed for automating the extraction of sales order data from SAP ERP using transaction code ZS86.
 
-# README.md:
+# README.md
 Provides detailed instructions on setting up SAP GUI Scripting, using the VBA Script from Excel, and customizing scripts for different SAP environments. It also includes a note directing users to view the actual production code in the SAP_GUI_&_VBA_Scripts files.
 
 # Usage Instructions
@@ -68,6 +68,6 @@ For detailed usage instructions and to view the actual production code, please r
 
 By following these instructions, users can effectively automate sales order data extraction from SAP ERP using the provided scripts.  
 
-### Additional Tips
+# Additional Tips
 - Test your scripts thoroughly in a development or sandbox SAP environment before using them in production.
 - Consider security implications and access controls when sharing or using scripts that interact with sensitive data.
