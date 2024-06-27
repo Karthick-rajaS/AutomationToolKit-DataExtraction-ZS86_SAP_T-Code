@@ -59,6 +59,7 @@ session.FindById("wnd[0]/tbar[0]/btn[15]").Press
 
 Plant = Worksheets("DataSheet").Range("D5").Value
 
+' Code to fill in and execute SAP GUI actions
 session.FindById("wnd[0]").Maximize
 session.FindById("wnd[0]/tbar[0]/okcd").Text = "/nzp85n"
 session.FindById("wnd[0]").SendVKey 0
@@ -104,7 +105,7 @@ Set columns1 = myGrid.ColumnOrder 'SAP column names in order in SAP window
   Next i
  Next j
  
-session.FindById("wnd[0]/tbar[0]/btn[3]").Press
+' Close SAP session
 session.FindById("wnd[0]/tbar[0]/btn[3]").Press
 
 End Sub
