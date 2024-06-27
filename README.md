@@ -1,5 +1,3 @@
-# VBA-Automation-Scripts
-Collection of VBA scripts for Automating Tasks, Designed to Boost Productivity!
 # 1. Set Up SAP GUI Scripting
 Firstly, ensure that SAP GUI Scripting is enabled on your SAP system and client machine. This involves:
 - Enabling scripting in SAP GUI via transaction `RZ11`.
