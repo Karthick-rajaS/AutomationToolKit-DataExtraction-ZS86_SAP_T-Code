@@ -1,4 +1,7 @@
-Sub CollectingDataFromZS86()
+
+Sub SalesOrderExtraction_ZS86()
+
+' SAP GUI Script
 
 If objGui Is Nothing Then
    Set SapGuiAuto = GetObject("SAPGUI")
@@ -14,6 +17,7 @@ If IsObject(WScript) Then
    WScript.ConnectObject session, "on"
    WScript.ConnectObject objGui, "on"
 End If
+
 
 SalesOrderNumber = Worksheets("DataSheet").Range("A2").Value
 
